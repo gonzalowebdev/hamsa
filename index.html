@@ -133,10 +133,12 @@ h1{font-size:clamp(3rem,8.4vw,7.4rem);line-height:.92;max-width:11ch}
 .why div{border-top:4px solid var(--slate);padding-top:1rem}
 .why h3{font-size:1.8rem;margin-bottom:.5rem}
 .loop{overflow:hidden;margin-top:4rem;border-block:2px solid var(--slate);padding:1.4rem 0;background:var(--white)}
-.track{display:flex;gap:4rem;width:max-content;animation:loop 32s linear infinite}
+.track{display:flex;gap:1.2rem;width:max-content;animation:loop 32s linear infinite}
 .loop:hover .track{animation-play-state:paused}
-.track img{height:52px;width:auto;filter:grayscale(1);opacity:.75;transition:filter .3s,opacity .3s}
-.track img:hover{filter:none;opacity:1}
+.lg{flex:none;width:200px;height:110px;border:2px solid var(--slate);background:var(--zinc)}
+.lg.dk{background:var(--slate)}
+.lg img{width:100%;height:100%;object-fit:contain;filter:grayscale(1);opacity:.8;transition:filter .3s,opacity .3s}
+.lg:hover img{filter:none;opacity:1}
 @keyframes loop{to{transform:translateX(-50%)}}
 
 /* Contacto */
@@ -314,7 +316,7 @@ var mas={
  'Centros comerciales':'Paseo Rivera Indarte|Nuevo Centro Shopping|Walmart|Becerra|Entre otros'
 };
 var prods=[['Puertas cortafuego','Resistencia al fuego certificada'],['Puertas espacios técnicos','Medidores, shafts y tableros'],['Puertas de ingreso','Edificios y viviendas'],['Brandas','A medida'],['Marcos para hojas de madera','Todas las medidas'],['Rejas','Seguridad y diseño'],['Escaleras','Rectas, helicoidales y de emergencia'],['Barandas','Interiores y exteriores'],['Pérgolas','Estructura y cubierta'],['Cocheras','Portones y estructuras'],['Cubiertas','Galpones y semicubiertos'],['Entrepisos','Estructura metálica'],['Frentes de locales','Cortinas y vidrieras'],['Estructuras livianas y pesadas','Proyecto, fabricación y montaje']];
-var clients=[2,3,4,5,6,7,8];
+var clients=[1,2,3,4,5,6,7,8],dark=[2,5],cn={1:'Globant',2:'Grupo Betania',3:'Capitalinas',4:'Genesis3',5:'DYCSA',6:'Grupo Edisur',7:'Makiber',8:'GNI'};
 
 /* Datos -> DOM */
 var grid=$('#grid');
@@ -340,7 +342,7 @@ prods.forEach(function(p){
  $('button',li).addEventListener('click',function(){sel.value=p[0];dataLayer.push({event:'producto_seleccionado',producto:p[0]});$('#contacto').scrollIntoView();setTimeout(function(){$('[name=nombre]').focus({preventScroll:true})},600)});
  pl.appendChild(li);
 });
-var tr=$('#track'),logos=clients.concat(clients).map(function(n){return '<img src="img/clients/'+n+'.png" alt="" loading="lazy" onerror="this.remove()">'}).join('');
+var tr=$('#track'),logos=clients.concat(clients).map(function(n,i){return '<span class="lg'+(dark.indexOf(n)>-1?' dk':'')+'"><img src="img/clients/'+n+'.png" alt="'+(i<clients.length?cn[n]:'')+'" loading="lazy" onerror="this.parentNode.remove()"></span>'}).join('');
 tr.innerHTML=logos;
 $('#yr').textContent=new Date().getFullYear();
 
